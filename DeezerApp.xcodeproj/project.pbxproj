@@ -56,15 +56,47 @@
 		74B8D39C2A0AA51800FC63E5 /* DeezerApp */ = {
 			isa = PBXGroup;
 			children = (
-				74B8D39D2A0AA51800FC63E5 /* AppDelegate.swift */,
-				74B8D39F2A0AA51800FC63E5 /* SceneDelegate.swift */,
-				74B8D3A12A0AA51800FC63E5 /* ViewController.swift */,
-				74B8D3A32A0AA51800FC63E5 /* Main.storyboard */,
-				74B8D3A62A0AA51800FC63E5 /* Assets.xcassets */,
-				74B8D3A82A0AA51800FC63E5 /* LaunchScreen.storyboard */,
-				74B8D3AB2A0AA51800FC63E5 /* Info.plist */,
+				74B8D3B12A0AA58800FC63E5 /* App */,
+				74B8D3B22A0AA5B800FC63E5 /* Common */,
+				74B8D3B32A0AA5BF00FC63E5 /* Scene */,
+				74B8D3B42A0AA5C400FC63E5 /* Resources */,
 			);
 			path = DeezerApp;
+			sourceTree = "<group>";
+		};
+		74B8D3B12A0AA58800FC63E5 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				74B8D39D2A0AA51800FC63E5 /* AppDelegate.swift */,
+				74B8D39F2A0AA51800FC63E5 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		74B8D3B22A0AA5B800FC63E5 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		74B8D3B32A0AA5BF00FC63E5 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				74B8D3A12A0AA51800FC63E5 /* ViewController.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		74B8D3B42A0AA5C400FC63E5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				74B8D3A82A0AA51800FC63E5 /* LaunchScreen.storyboard */,
+				74B8D3A32A0AA51800FC63E5 /* Main.storyboard */,
+				74B8D3A62A0AA51800FC63E5 /* Assets.xcassets */,
+				74B8D3AB2A0AA51800FC63E5 /* Info.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,7 +321,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3CY5GSUS4Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DeezerApp/Info.plist;
+				INFOPLIST_FILE = DeezerApp/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -317,7 +349,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3CY5GSUS4Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DeezerApp/Info.plist;
+				INFOPLIST_FILE = DeezerApp/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
