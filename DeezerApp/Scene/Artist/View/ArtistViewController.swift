@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ArtistViewController.swift
 //  DeezerApp
 //
 //  Created by Mehmet Ali Demir on 9.05.2023.
@@ -7,9 +7,12 @@
 
 import UIKit
 
-class CategoryViewController: UIViewController {
-    @IBOutlet weak var categoryCollectionView: UICollectionView!
-    var genres = [Genre]()
+class ArtistViewController: UIViewController {
+
+    @IBOutlet weak var artistCollectionView: UICollectionView!
+    var genreID: Int!
+    var genreName: String!
+    var artistList = [GenreArtist]()
 
     var cellWidth: CGFloat = 0
     var cellHeight: CGFloat = 0
@@ -22,19 +25,19 @@ class CategoryViewController: UIViewController {
     }
 
     private func setup() {
-        categoryCollectionView.dataSource = self
-        categoryCollectionView.delegate = self
-        getGenres()
+        artistCollectionView.dataSource = self
+        artistCollectionView.delegate = self
+        getArtist()
     }
-    
-    private func getGenres() {
-        APICaller.shared.getGenres { data in
+
+    private func getArtist() {
+        APICaller.shared.getGenreArtist(with: genreID) { data in
             switch(data)
             {
-            case .success(let genres):
+            case .success(let artist):
                 DispatchQueue.main.async {
-                    self.genres = genres.data ?? [Genre]()
-                    self.categoryCollectionView.reloadData()
+                    self.artistList = artist.data ?? [GenreArtist]()
+                    self.artistCollectionView.reloadData()
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -60,49 +63,33 @@ class CategoryViewController: UIViewController {
                 completion(nil)
                 return
             }
-
             completion(image)
         }
 
         task.resume()
     }
-
-
 }
 
-extension CategoryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ArtistViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return genres.count
+        return artistList.count
     }
-
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "categoryCell", for: indexPath) as! CategoryCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "artistCell", for: indexPath) as! ArtistCollectionViewCell
 
-        let category = genres[indexPath.row]
-        cell.categoryLabel.text = category.name
-        downloadImage(from: category.picture ?? "") { image in
+        let artist = artistList[indexPath.row]
+        cell.artistLabel.text = artist.name
+        downloadImage(from: artist.picture ?? "") { image in
             DispatchQueue.main.async {
-                cell.categoryImageView.image = image
+                cell.artistImageView.image = image
             }
         }
         return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedGenre = genres[indexPath.row]
-        performSegue(withIdentifier: "goToArtist", sender: selectedGenre)
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToArtist", let artistVC = segue.destination as? ArtistViewController, let selectedGenre = sender as? Genre {
-            artistVC.genreID = selectedGenre.id
-            artistVC.genreName = selectedGenre.name
-        }
-    }
 }
 
 
-extension CategoryViewController: UICollectionViewDelegateFlowLayout {
+extension ArtistViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let availableWidth = collectionView.bounds.width - (spacing * (numberOfColumn + 1))

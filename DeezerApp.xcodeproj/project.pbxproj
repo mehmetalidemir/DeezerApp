@@ -16,6 +16,9 @@
 		74B8D3BA2A0AA76F00FC63E5 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B8D3B92A0AA76F00FC63E5 /* CategoryCollectionViewCell.swift */; };
 		74B8D3BD2A0AA86200FC63E5 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B8D3BC2A0AA86200FC63E5 /* Genre.swift */; };
 		74B8D3C02A0AAA2B00FC63E5 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B8D3BF2A0AAA2B00FC63E5 /* APICaller.swift */; };
+		74B8D3C22A0ABC3200FC63E5 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B8D3C12A0ABC3200FC63E5 /* Artist.swift */; };
+		74B8D3C62A0ABE6200FC63E5 /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B8D3C52A0ABE6200FC63E5 /* ArtistViewController.swift */; };
+		74B8D3C92A0ABEBE00FC63E5 /* ArtistCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B8D3C82A0ABEBE00FC63E5 /* ArtistCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		74B8D3B92A0AA76F00FC63E5 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		74B8D3BC2A0AA86200FC63E5 /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		74B8D3BF2A0AAA2B00FC63E5 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		74B8D3C12A0ABC3200FC63E5 /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
+		74B8D3C52A0ABE6200FC63E5 /* ArtistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistViewController.swift; sourceTree = "<group>"; };
+		74B8D3C82A0ABEBE00FC63E5 /* ArtistCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +97,7 @@
 		74B8D3B32A0AA5BF00FC63E5 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				74B8D3C32A0ABE3E00FC63E5 /* Artist */,
 				74B8D3B52A0AA62600FC63E5 /* Category */,
 			);
 			path = Scene;
@@ -136,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				74B8D3BC2A0AA86200FC63E5 /* Genre.swift */,
+				74B8D3C12A0ABC3200FC63E5 /* Artist.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -146,6 +154,31 @@
 				74B8D3BF2A0AAA2B00FC63E5 /* APICaller.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		74B8D3C32A0ABE3E00FC63E5 /* Artist */ = {
+			isa = PBXGroup;
+			children = (
+				74B8D3C42A0ABE4500FC63E5 /* View */,
+			);
+			path = Artist;
+			sourceTree = "<group>";
+		};
+		74B8D3C42A0ABE4500FC63E5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				74B8D3C72A0ABE9400FC63E5 /* Cell */,
+				74B8D3C52A0ABE6200FC63E5 /* ArtistViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		74B8D3C72A0ABE9400FC63E5 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				74B8D3C82A0ABEBE00FC63E5 /* ArtistCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,9 +255,12 @@
 				74B8D3BA2A0AA76F00FC63E5 /* CategoryCollectionViewCell.swift in Sources */,
 				74B8D3C02A0AAA2B00FC63E5 /* APICaller.swift in Sources */,
 				74B8D3A22A0AA51800FC63E5 /* CategoryViewController.swift in Sources */,
+				74B8D3C62A0ABE6200FC63E5 /* ArtistViewController.swift in Sources */,
 				74B8D39E2A0AA51800FC63E5 /* AppDelegate.swift in Sources */,
+				74B8D3C92A0ABEBE00FC63E5 /* ArtistCollectionViewCell.swift in Sources */,
 				74B8D3A02A0AA51800FC63E5 /* SceneDelegate.swift in Sources */,
 				74B8D3BD2A0AA86200FC63E5 /* Genre.swift in Sources */,
+				74B8D3C22A0ABC3200FC63E5 /* Artist.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

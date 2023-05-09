@@ -35,4 +35,24 @@ class APICaller{
         }
         task.resume()
     }
+    
+    func getGenreArtist(with genreId: Int, completion: @escaping (Result<GenreArtists, Error>) -> Void){
+           
+           guard let url = URL(string: "\(Constants.baseURL)/genre/\(genreId)/artists") else {return}
+
+           let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
+               guard let data, error == nil else{
+                   return
+               }
+               do{
+                   let results = try JSONDecoder().decode(GenreArtists.self, from: data)
+                   completion(.success(results))
+               }catch{
+                   print(String(describing: error))
+                   completion(.failure(APIError.failedToGetData))
+               }
+           }
+           task.resume()
+
+       }
 }

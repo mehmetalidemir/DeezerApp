@@ -80,11 +80,89 @@
                     <navigationItem key="navigationItem" id="Veu-QI-BZW"/>
                     <connections>
                         <outlet property="categoryCollectionView" destination="v1j-rE-YgB" id="aFa-4h-HmR"/>
+                        <segue destination="HhV-Dq-dQn" kind="show" identifier="goToArtist" id="jQl-dZ-pCS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1970.2290076335878" y="-2.1126760563380285"/>
+        </scene>
+        <!--Artist View Controller-->
+        <scene sceneID="NeK-tI-vXc">
+            <objects>
+                <viewController id="HhV-Dq-dQn" customClass="ArtistViewController" customModule="DeezerApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gjw-i5-mW3">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cLT-Aa-CAz">
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="FqJ-ie-wzq">
+                                    <size key="itemSize" width="231" height="214"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="artistCell" id="xCF-KI-pip" customClass="ArtistCollectionViewCell" customModule="DeezerApp" customModuleProvider="target">
+                                        <rect key="frame" x="81" y="0.0" width="231" height="214"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="oEy-QF-F70">
+                                            <rect key="frame" x="0.0" y="0.0" width="231" height="214"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yNH-4V-ncy">
+                                                    <rect key="frame" x="0.0" y="0.0" width="231" height="214"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="150" id="VFz-qC-cCB"/>
+                                                        <constraint firstAttribute="height" constant="150" id="YbL-ss-KJD"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ame-qL-LIT">
+                                                    <rect key="frame" x="0.0" y="188.66666666666666" width="231" height="25.333333333333343"/>
+                                                    <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Ame-qL-LIT" firstAttribute="leading" secondItem="oEy-QF-F70" secondAttribute="leading" id="46l-mN-r3k"/>
+                                                <constraint firstAttribute="bottom" secondItem="Ame-qL-LIT" secondAttribute="bottom" id="4Fs-hz-ej7"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ame-qL-LIT" secondAttribute="trailing" id="InO-Af-rQX"/>
+                                                <constraint firstItem="yNH-4V-ncy" firstAttribute="leading" secondItem="oEy-QF-F70" secondAttribute="leading" id="WSD-7e-tQv"/>
+                                                <constraint firstAttribute="bottom" secondItem="yNH-4V-ncy" secondAttribute="bottom" id="jIc-uf-4KZ"/>
+                                                <constraint firstItem="yNH-4V-ncy" firstAttribute="top" secondItem="oEy-QF-F70" secondAttribute="top" id="r9C-lK-wOl"/>
+                                                <constraint firstAttribute="trailing" secondItem="yNH-4V-ncy" secondAttribute="trailing" id="yvA-gr-n5K"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="231" height="214"/>
+                                        <connections>
+                                            <outlet property="artistImageView" destination="yNH-4V-ncy" id="cRM-AU-Wd4"/>
+                                            <outlet property="artistLabel" destination="Ame-qL-LIT" id="Gki-92-72L"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="8cF-er-WGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="cLT-Aa-CAz" firstAttribute="leading" secondItem="8cF-er-WGB" secondAttribute="leading" id="CrO-2j-NbC"/>
+                            <constraint firstItem="8cF-er-WGB" firstAttribute="bottom" secondItem="cLT-Aa-CAz" secondAttribute="bottom" id="DMX-6u-kaw"/>
+                            <constraint firstItem="cLT-Aa-CAz" firstAttribute="top" secondItem="8cF-er-WGB" secondAttribute="top" id="Hwb-9Y-Sjf"/>
+                            <constraint firstItem="8cF-er-WGB" firstAttribute="trailing" secondItem="cLT-Aa-CAz" secondAttribute="trailing" id="tkZ-5Q-UTy"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="qUJ-qS-leA"/>
+                    <connections>
+                        <outlet property="artistCollectionView" destination="cLT-Aa-CAz" id="HQq-7N-RJ3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Vp-pJ-7jD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2988.5496183206105" y="1.4084507042253522"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="eju-az-q6e">
