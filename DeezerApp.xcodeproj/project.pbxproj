@@ -9,21 +9,27 @@
 /* Begin PBXBuildFile section */
 		74B8D39E2A0AA51800FC63E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B8D39D2A0AA51800FC63E5 /* AppDelegate.swift */; };
 		74B8D3A02A0AA51800FC63E5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B8D39F2A0AA51800FC63E5 /* SceneDelegate.swift */; };
-		74B8D3A22A0AA51800FC63E5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B8D3A12A0AA51800FC63E5 /* ViewController.swift */; };
+		74B8D3A22A0AA51800FC63E5 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B8D3A12A0AA51800FC63E5 /* CategoryViewController.swift */; };
 		74B8D3A52A0AA51800FC63E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74B8D3A32A0AA51800FC63E5 /* Main.storyboard */; };
 		74B8D3A72A0AA51800FC63E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74B8D3A62A0AA51800FC63E5 /* Assets.xcassets */; };
 		74B8D3AA2A0AA51800FC63E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74B8D3A82A0AA51800FC63E5 /* LaunchScreen.storyboard */; };
+		74B8D3BA2A0AA76F00FC63E5 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B8D3B92A0AA76F00FC63E5 /* CategoryCollectionViewCell.swift */; };
+		74B8D3BD2A0AA86200FC63E5 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B8D3BC2A0AA86200FC63E5 /* Genre.swift */; };
+		74B8D3C02A0AAA2B00FC63E5 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B8D3BF2A0AAA2B00FC63E5 /* APICaller.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		74B8D39A2A0AA51800FC63E5 /* DeezerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeezerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74B8D39D2A0AA51800FC63E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		74B8D39F2A0AA51800FC63E5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		74B8D3A12A0AA51800FC63E5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		74B8D3A12A0AA51800FC63E5 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		74B8D3A42A0AA51800FC63E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		74B8D3A62A0AA51800FC63E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		74B8D3A92A0AA51800FC63E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		74B8D3AB2A0AA51800FC63E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74B8D3B92A0AA76F00FC63E5 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		74B8D3BC2A0AA86200FC63E5 /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
+		74B8D3BF2A0AAA2B00FC63E5 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +82,8 @@
 		74B8D3B22A0AA5B800FC63E5 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				74B8D3BE2A0AAA1300FC63E5 /* Service */,
+				74B8D3BB2A0AA85300FC63E5 /* Model */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -83,7 +91,7 @@
 		74B8D3B32A0AA5BF00FC63E5 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				74B8D3A12A0AA51800FC63E5 /* ViewController.swift */,
+				74B8D3B52A0AA62600FC63E5 /* Category */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -97,6 +105,47 @@
 				74B8D3AB2A0AA51800FC63E5 /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		74B8D3B52A0AA62600FC63E5 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				74B8D3B62A0AA62C00FC63E5 /* View */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		74B8D3B62A0AA62C00FC63E5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				74B8D3B82A0AA75000FC63E5 /* Cell */,
+				74B8D3A12A0AA51800FC63E5 /* CategoryViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		74B8D3B82A0AA75000FC63E5 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				74B8D3B92A0AA76F00FC63E5 /* CategoryCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		74B8D3BB2A0AA85300FC63E5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				74B8D3BC2A0AA86200FC63E5 /* Genre.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		74B8D3BE2A0AAA1300FC63E5 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				74B8D3BF2A0AAA2B00FC63E5 /* APICaller.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -170,9 +219,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74B8D3A22A0AA51800FC63E5 /* ViewController.swift in Sources */,
+				74B8D3BA2A0AA76F00FC63E5 /* CategoryCollectionViewCell.swift in Sources */,
+				74B8D3C02A0AAA2B00FC63E5 /* APICaller.swift in Sources */,
+				74B8D3A22A0AA51800FC63E5 /* CategoryViewController.swift in Sources */,
 				74B8D39E2A0AA51800FC63E5 /* AppDelegate.swift in Sources */,
 				74B8D3A02A0AA51800FC63E5 /* SceneDelegate.swift in Sources */,
+				74B8D3BD2A0AA86200FC63E5 /* Genre.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
