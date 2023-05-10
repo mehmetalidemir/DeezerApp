@@ -99,6 +99,7 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
             artistVC.genreName = selectedGenre.name
         }
     }
+    
 }
 
 

@@ -13,6 +13,7 @@ class ArtistViewController: UIViewController {
     var genreID: Int!
     var genreName: String!
     var artistList = [GenreArtist]()
+    var selectedArtist: Artist!
 
     var cellWidth: CGFloat = 0
     var cellHeight: CGFloat = 0
@@ -86,6 +87,25 @@ extension ArtistViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
         return cell
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let artist = artistList[indexPath.row]
+        performSegue(withIdentifier: "goToAlbum", sender: artist)
+
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToAlbum", let albumVC = segue.destination as? AlbumViewController, let artist = sender as? GenreArtist {
+            albumVC.artistID = artist.id
+            albumVC.artistName = artist.name
+
+            downloadImage(from: artist.picture ?? "") { image in
+                DispatchQueue.main.async {
+                    albumVC.artistCoverImageView.image = image
+                }
+            }
+        }
+    }
+
 }
 
 
