@@ -16,7 +16,6 @@ class AlbumViewController: UIViewController {
     var artistAlbums = [ArtistAlbum]()
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setup()
 
     }
@@ -120,9 +119,16 @@ extension AlbumViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let artist = artistAlbums[indexPath.row]
+        performSegue(withIdentifier: "goToAlbumDetail", sender: artist)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToAlbumDetail", let albumDetailVC = segue.destination as? AlbumDetailViewController, let album = sender as? ArtistAlbum {
+            albumDetailVC.albumID = album.id
+            albumDetailVC.albumName = album.title
+            albumDetailVC.albumPhotoURL = album.cover
+        }
+    }
 }
-
-
-
-
-
