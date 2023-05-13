@@ -32,7 +32,7 @@ class ArtistViewController: UIViewController {
     }
 
     private func getArtist() {
-        APICaller.shared.getGenreArtist(with: genreID) { data in
+        APIManager.shared.getGenreArtist(with: genreID) { data in
             switch(data)
             {
             case .success(let artist):
@@ -111,11 +111,7 @@ extension ArtistViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
 extension ArtistViewController: UICollectionViewDelegateFlowLayout {
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let availableWidth = collectionView.bounds.width - (spacing * (numberOfColumn + 1))
-        let cellWidth = availableWidth / numberOfColumn
-        return CGSize(width: cellWidth, height: cellWidth)
-    }
+
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return spacing

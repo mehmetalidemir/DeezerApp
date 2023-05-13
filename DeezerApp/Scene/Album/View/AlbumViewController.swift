@@ -36,7 +36,7 @@ class AlbumViewController: UIViewController {
 
     private func getArtistAlbums() {
 
-        APICaller.shared.getArtistAlbums(with: artistID) { data in
+        APIManager.shared.getArtistAlbums(with: artistID) { data in
             switch(data)
             {
             case .success(let album):

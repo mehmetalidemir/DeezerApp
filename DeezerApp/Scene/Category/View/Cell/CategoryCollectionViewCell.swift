@@ -11,7 +11,6 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var categoryImageView: UIImageView!
     
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = 10

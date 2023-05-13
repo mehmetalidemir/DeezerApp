@@ -12,14 +12,17 @@ struct Constants {
 }
 
 enum APIError: Error {
-    case failedToGetData
+    case InvalidEndpoint
+    case DecodingError
 }
 
-class APICaller {
-    static let shared = APICaller()
+class APIManager {
+    static let shared = APIManager()
 
     func getGenres(completion: @escaping (Result<Genres, Error>) -> Void) {
-        guard let url = URL(string: "\(Constants.baseURL)/genre") else { return }
+        guard let url = URL(string: "\(Constants.baseURL)/genre") else { completion(.failure(APIError.InvalidEndpoint))
+            return
+        }
 
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
             guard let data, error == nil else {
@@ -30,7 +33,7 @@ class APICaller {
                 completion(.success(results))
             } catch {
                 print(String(describing: error))
-                completion(.failure(APIError.failedToGetData))
+                completion(.failure(APIError.DecodingError))
             }
         }
         task.resume()
@@ -49,7 +52,7 @@ class APICaller {
                 completion(.success(results))
             } catch {
                 print(String(describing: error))
-                completion(.failure(APIError.failedToGetData))
+                completion(.failure(APIError.DecodingError))
             }
         }
         task.resume()
@@ -69,7 +72,7 @@ class APICaller {
                 completion(.success(results))
             } catch {
                 print(String(describing: error))
-                completion(.failure(APIError.failedToGetData))
+                completion(.failure(APIError.DecodingError))
             }
 
         }
@@ -90,7 +93,7 @@ class APICaller {
                 completion(.success(results.data ?? [AlbumSong]()))
             }catch{
                 print(String(describing: error))
-                completion(.failure(APIError.failedToGetData))
+                completion(.failure(APIError.DecodingError))
             }
 
         }

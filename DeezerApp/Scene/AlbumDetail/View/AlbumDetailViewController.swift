@@ -17,6 +17,7 @@ class AlbumDetailViewController: UIViewController {
     var albumName: String!
     var albumPhotoURL: String!
     var timer: Timer?
+    var duration: Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,35 +30,37 @@ class AlbumDetailViewController: UIViewController {
         albumDetailTableView.separatorStyle = .none
         getSongs()
     }
-
-    private func getSongs() {
-        guard let albumID = albumID else { return }
-        APICaller.shared.getAlbumSongs(with: albumID) { result in
-            switch result {
-            case .success(let songs):
-                DispatchQueue.main.async {
-                    self.songList = songs
-                    self.albumDetailTableView.reloadData()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+    @IBAction func favoriteButtonTapped(_ sender: UIButton) {
+        let song = songList[sender.tag]
+            addToFavorites(sender, song: song)
     }
 
-    func downloadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
-        guard let url = URL(string: urlString) else { return }
-        DispatchQueue.global(qos: .userInitiated).async {
-            if let imageData = try? Data(contentsOf: url), let image = UIImage(data: imageData) {
-                DispatchQueue.main.async {
-                    completion(image)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    completion(nil)
-                }
-            }
+    func addToFavorites(_ sender: UIButton, song: AlbumSong) {
+        var favorites = UserDefaults.standard.array(forKey: "favorites") as? [[String: Any]] ?? []
+
+        let isAlreadyFavorite = favorites.contains(where: { $0["id"] as? Int == song.id })
+        if isAlreadyFavorite {
+            print("This song is already in favorites")
+            favorites.removeAll(where: { $0["id"] as? Int == song.id })
+            let image = UIImage(systemName: "heart")
+            sender.setImage(image, for: .normal)
+        } else {
+            let favoriteSong: [String: Any] = [
+                "id": song.id ?? 0,
+                "title": song.title ?? "",
+                "artist": song.artist?.name ?? "",
+                "duration": song.duration ?? 0,
+                "preview": song.preview ?? "",
+                "albumPhotoURL" : albumPhotoURL ?? ""
+            ]
+
+            favorites.append(favoriteSong)
+            let image = UIImage(systemName: "heart.fill")
+            sender.setImage(image, for: .normal)
         }
+
+        UserDefaults.standard.set(favorites, forKey: "favorites")
+        print("Song added to favorites")
     }
 
     func downloadFileFromURL(url: URL, startTime: TimeInterval = 0) {
@@ -75,21 +78,50 @@ class AlbumDetailViewController: UIViewController {
             audioPlayer?.prepareToPlay()
             audioPlayer?.volume = 1.0
             audioPlayer?.play()
-
             Timer.scheduledTimer(withTimeInterval: 30.0, repeats: false) { [weak self] _ in
                 self?.audioPlayer?.stop()
             }
-
         } catch let error as NSError {
             print(error.localizedDescription)
         } catch {
             print("AVAudioPlayer init failed")
         }
     }
+
+    private func getSongs() {
+        guard let albumID = albumID else { return }
+        APIManager.shared.getAlbumSongs(with: albumID) { result in
+            switch result {
+            case .success(let songs):
+                DispatchQueue.main.async {
+                    self.songList = songs
+                    self.albumDetailTableView.reloadData()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    func downloadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
+        guard let url = URL(string: urlString) else { return }
+        DispatchQueue.global(qos: .userInitiated).async {
+            if let imageData = try? Data(contentsOf: url),
+
+                let image = UIImage(data: imageData) {
+                DispatchQueue.main.async {
+                    completion(image)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+            }
+        }
+    }
 }
 
 extension AlbumDetailViewController: UITableViewDelegate, UITableViewDataSource {
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return songList.count
     }
@@ -100,7 +132,7 @@ extension AlbumDetailViewController: UITableViewDelegate, UITableViewDataSource 
         }
 
         let song = songList[indexPath.row]
-        cell.songNameLabel.text = song.title_short
+        cell.songNameLabel.text = song.title
 
         let seconds = song.duration ?? 0
         let minutes = seconds / 60
@@ -111,6 +143,9 @@ extension AlbumDetailViewController: UITableViewDelegate, UITableViewDataSource 
                 cell.songImageView.image = image
             }
         }
+
+        cell.songFavoriteButton.tag = indexPath.row
+
         return cell
     }
 

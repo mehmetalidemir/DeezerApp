@@ -28,7 +28,7 @@ class CategoryViewController: UIViewController {
     }
     
     private func getGenres() {
-        APICaller.shared.getGenres { data in
+        APIManager.shared.getGenres { data in
             switch(data)
             {
             case .success(let genres):
@@ -105,12 +105,8 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
 
 extension CategoryViewController: UICollectionViewDelegateFlowLayout {
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let availableWidth = collectionView.bounds.width - (spacing * (numberOfColumn + 1))
-        let cellWidth = availableWidth / numberOfColumn
-        return CGSize(width: cellWidth, height: cellWidth)
-    }
 
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return spacing
     }
