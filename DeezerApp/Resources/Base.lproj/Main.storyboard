@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Category View Controller-->
+        <!--Deezer-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="CategoryViewController" customModule="DeezerApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -76,7 +76,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="v1j-rE-YgB" secondAttribute="trailing" id="shf-Kk-vPB"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Veu-QI-BZW"/>
+                    <navigationItem key="navigationItem" title="Deezer" id="Veu-QI-BZW"/>
                     <connections>
                         <outlet property="categoryCollectionView" destination="v1j-rE-YgB" id="aFa-4h-HmR"/>
                         <segue destination="HhV-Dq-dQn" kind="show" identifier="goToArtist" id="jQl-dZ-pCS"/>
@@ -84,7 +84,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1970.2290076335878" y="-2.1126760563380285"/>
+            <point key="canvasLocation" x="2896.9465648854962" y="-2.1126760563380285"/>
         </scene>
         <!--Artist View Controller-->
         <scene sceneID="NeK-tI-vXc">
@@ -111,11 +111,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="231" height="214"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yNH-4V-ncy">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yNH-4V-ncy">
                                                     <rect key="frame" x="0.0" y="0.0" width="231" height="214"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="150" id="VFz-qC-cCB"/>
-                                                        <constraint firstAttribute="height" constant="150" id="YbL-ss-KJD"/>
+                                                        <constraint firstAttribute="width" constant="170" id="VFz-qC-cCB"/>
+                                                        <constraint firstAttribute="height" constant="200" id="YbL-ss-KJD"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ame-qL-LIT">
@@ -162,7 +162,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Vp-pJ-7jD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2988.5496183206105" y="1.4084507042253522"/>
+            <point key="canvasLocation" x="3915.2671755725191" y="1.4084507042253522"/>
         </scene>
         <!--Album View Controller-->
         <scene sceneID="giQ-ef-y0k">
@@ -254,7 +254,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5sF-dM-GXv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3939.6946564885493" y="-4.2253521126760569"/>
+            <point key="canvasLocation" x="4866.4122137404574" y="-4.2253521126760569"/>
         </scene>
         <!--Album Detail View Controller-->
         <scene sceneID="c0Z-LM-ilm">
@@ -349,7 +349,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HfH-tu-xzH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4814.5038167938928" y="-5.6338028169014089"/>
+            <point key="canvasLocation" x="5741.221374045801" y="-5.6338028169014089"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="eju-az-q6e">
@@ -359,10 +359,11 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9tt-2w-cAd">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" systemColor="systemPurpleColor"/>
                     </tabBar>
                     <connections>
                         <segue destination="SnJ-yv-Xsw" kind="relationship" relationship="viewControllers" id="8eO-sS-Mfc"/>
-                        <segue destination="88q-fb-yaC" kind="relationship" relationship="viewControllers" id="gMA-m9-xQE"/>
+                        <segue destination="Hgh-nN-UV0" kind="relationship" relationship="viewControllers" id="gMA-m9-xQE"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V4s-c4-sfk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -378,6 +379,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Di7-SV-1Bv">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <navigationBarAppearance key="compactScrollEdgeAppearance"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -386,9 +388,9 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RUG-eb-vJR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1095" y="432"/>
+            <point key="canvasLocation" x="2020.6106870229007" y="431.69014084507046"/>
         </scene>
-        <!--Likes-->
+        <!--Favorite View Controller-->
         <scene sceneID="Vdx-jI-nUb">
             <objects>
                 <viewController id="88q-fb-yaC" customClass="FavoriteViewController" customModule="DeezerApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -397,7 +399,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ug0-Vi-C8N">
-                                <rect key="frame" x="0.0" y="59" width="393" height="710"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="favoriteCell" id="lCl-42-MeI" customClass="FavoriteTableViewCell" customModule="DeezerApp" customModuleProvider="target">
@@ -407,7 +409,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="100.33333587646484"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jny-m5-sRm">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jny-m5-sRm">
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100.33333333333333"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="100" id="41H-VN-rkc"/>
@@ -474,12 +476,31 @@
                             <constraint firstItem="ug0-Vi-C8N" firstAttribute="top" secondItem="DlK-7x-PWe" secondAttribute="top" id="ztT-XG-cF1"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Likes" image="heart.rectangle" catalog="system" id="SIW-WI-mcL"/>
+                    <navigationItem key="navigationItem" id="tSU-6V-aip"/>
                     <connections>
                         <outlet property="favoriteTableView" destination="ug0-Vi-C8N" id="luf-tR-pB2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HpX-M2-daM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-834" y="1136"/>
+        </scene>
+        <!--Likes-->
+        <scene sceneID="MhP-ou-xda">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Hgh-nN-UV0" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Likes" image="heart.rectangle" catalog="system" id="SIW-WI-mcL"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1Nb-Em-N2B">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="88q-fb-yaC" kind="relationship" relationship="rootViewController" id="FQk-1S-sEW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Adn-ia-rha" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-834.35114503816794" y="432.3943661971831"/>
         </scene>
@@ -494,6 +515,9 @@
         </systemColor>
         <systemColor name="systemGroupedBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPurpleColor">
+            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

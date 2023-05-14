@@ -25,6 +25,7 @@ class CategoryViewController: UIViewController {
         categoryCollectionView.dataSource = self
         categoryCollectionView.delegate = self
         getGenres()
+        self.title = "Deezer"
     }
     
     private func getGenres() {
@@ -47,27 +48,21 @@ class CategoryViewController: UIViewController {
             completion(nil)
             return
         }
-
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
                 print("error \(error!.localizedDescription)")
                 completion(nil)
                 return
             }
-
             guard let data = data, let image = UIImage(data: data) else {
                 print("Image data is empty")
                 completion(nil)
                 return
             }
-
             completion(image)
         }
-
         task.resume()
     }
-
-
 }
 
 extension CategoryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -91,6 +86,7 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedGenre = genres[indexPath.row]
         performSegue(withIdentifier: "goToArtist", sender: selectedGenre)
+        self.navigationItem.title = selectedGenre.name
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -105,8 +101,6 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
 
 extension CategoryViewController: UICollectionViewDelegateFlowLayout {
 
-
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return spacing
     }

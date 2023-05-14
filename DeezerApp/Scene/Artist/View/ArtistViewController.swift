@@ -111,8 +111,6 @@ extension ArtistViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
 extension ArtistViewController: UICollectionViewDelegateFlowLayout {
 
-
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return spacing
     }

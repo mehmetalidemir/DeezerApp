@@ -56,7 +56,6 @@ class APIManager {
             }
         }
         task.resume()
-
     }
 
     func getArtistAlbums(with artistID: Int, completion: @escaping (Result<ArtistAlbums, Error>) -> Void) {

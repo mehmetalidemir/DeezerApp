@@ -32,7 +32,7 @@ class AlbumDetailViewController: UIViewController {
     }
     @IBAction func favoriteButtonTapped(_ sender: UIButton) {
         let song = songList[sender.tag]
-            addToFavorites(sender, song: song)
+        addToFavorites(sender, song: song)
     }
 
     func addToFavorites(_ sender: UIButton, song: AlbumSong) {
@@ -51,7 +51,7 @@ class AlbumDetailViewController: UIViewController {
                 "artist": song.artist?.name ?? "",
                 "duration": song.duration ?? 0,
                 "preview": song.preview ?? "",
-                "albumPhotoURL" : albumPhotoURL ?? ""
+                "albumPhotoURL": albumPhotoURL ?? ""
             ]
 
             favorites.append(favoriteSong)
@@ -146,8 +146,15 @@ extension AlbumDetailViewController: UITableViewDelegate, UITableViewDataSource 
 
         cell.songFavoriteButton.tag = indexPath.row
 
+        let favorites = UserDefaults.standard.array(forKey: "favorites") as? [[String: Any]] ?? []
+        let isAlreadyFavorite = favorites.contains(where: { $0["id"] as? Int == song.id })
+        let imageName = isAlreadyFavorite ? "heart.fill" : "heart"
+        let image = UIImage(systemName: imageName)
+        cell.songFavoriteButton.setImage(image, for: .normal)
+
         return cell
     }
+
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100

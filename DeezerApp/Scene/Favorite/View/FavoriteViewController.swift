@@ -18,6 +18,7 @@ class FavoriteViewController: UIViewController {
         super.viewDidLoad()
 
         setupTableView()
+        navigationItem.title = "Favorites"
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -30,6 +31,7 @@ class FavoriteViewController: UIViewController {
         favoriteTableView.delegate = self
         favoriteTableView.dataSource = self
         favoriteTableView.separatorStyle = .none
+        
     }
 
     private func loadFavorites() {
