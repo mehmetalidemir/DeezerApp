@@ -66,7 +66,6 @@ class ArtistViewController: UIViewController {
             }
             completion(image)
         }
-
         task.resume()
     }
 }
@@ -80,11 +79,8 @@ extension ArtistViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
         let artist = artistList[indexPath.row]
         cell.artistLabel.text = artist.name
-        downloadImage(from: artist.picture ?? "") { image in
-            DispatchQueue.main.async {
-                cell.artistImageView.image = image
-            }
-        }
+        cell.artistImageView.setImage(from: artist.picture ?? "")
+
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -97,15 +93,13 @@ extension ArtistViewController: UICollectionViewDelegate, UICollectionViewDataSo
         if segue.identifier == "goToAlbum", let albumVC = segue.destination as? AlbumViewController, let artist = sender as? GenreArtist {
             albumVC.artistID = artist.id
             albumVC.artistName = artist.name
-
-            downloadImage(from: artist.picture ?? "") { image in
+            downloadImage(from: artist.picture_big ?? "") { image in
                 DispatchQueue.main.async {
                     albumVC.artistCoverImageView.image = image
                 }
             }
         }
     }
-
 }
 
 

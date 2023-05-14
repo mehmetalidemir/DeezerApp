@@ -102,23 +102,6 @@ class AlbumDetailViewController: UIViewController {
             }
         }
     }
-
-    func downloadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
-        guard let url = URL(string: urlString) else { return }
-        DispatchQueue.global(qos: .userInitiated).async {
-            if let imageData = try? Data(contentsOf: url),
-
-                let image = UIImage(data: imageData) {
-                DispatchQueue.main.async {
-                    completion(image)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    completion(nil)
-                }
-            }
-        }
-    }
 }
 
 extension AlbumDetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -138,11 +121,7 @@ extension AlbumDetailViewController: UITableViewDelegate, UITableViewDataSource 
         let minutes = seconds / 60
         cell.songDurationLabel.text = "\(minutes):\(seconds % 60)"
 
-        if let albumPhotoURL = albumPhotoURL {
-            downloadImage(from: albumPhotoURL) { image in
-                cell.songImageView.image = image
-            }
-        }
+        cell.songImageView.setImage(from: albumPhotoURL ?? "")
 
         cell.songFavoriteButton.tag = indexPath.row
 

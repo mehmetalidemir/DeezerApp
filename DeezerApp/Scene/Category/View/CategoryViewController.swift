@@ -42,27 +42,6 @@ class CategoryViewController: UIViewController {
             }
         }
     }
-
-    func downloadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
-        guard let url = URL(string: urlString) else {
-            completion(nil)
-            return
-        }
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard error == nil else {
-                print("error \(error!.localizedDescription)")
-                completion(nil)
-                return
-            }
-            guard let data = data, let image = UIImage(data: data) else {
-                print("Image data is empty")
-                completion(nil)
-                return
-            }
-            completion(image)
-        }
-        task.resume()
-    }
 }
 
 extension CategoryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -72,16 +51,13 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "categoryCell", for: indexPath) as! CategoryCollectionViewCell
-
+        
         let category = genres[indexPath.row]
         cell.categoryLabel.text = category.name
-        downloadImage(from: category.picture ?? "") { image in
-            DispatchQueue.main.async {
-                cell.categoryImageView.image = image
-            }
-        }
+        cell.categoryImageView.setImage(from: category.picture ?? "")
         return cell
     }
+
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedGenre = genres[indexPath.row]

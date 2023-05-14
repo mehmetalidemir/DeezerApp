@@ -53,27 +53,6 @@ class FavoriteViewController: UIViewController {
         (sender as AnyObject).setImage(image, for: .normal)
     }
 
-    func downloadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
-       guard let url = URL(string: urlString) else {
-          completion(nil)
-          return
-       }
-
-       DispatchQueue.global().async {
-          if let data = try? Data(contentsOf: url),
-             let image = UIImage(data: data) {
-             DispatchQueue.main.async {
-                completion(image)
-             }
-          } else {
-             DispatchQueue.main.async {
-                completion(nil)
-             }
-          }
-       }
-    }
-
-
     private func updateSongDurations() {
         for (index, favorite) in favoriteSongs.enumerated() {
             let albumID = favorite["albumID"] as? Int ?? 0
@@ -133,8 +112,20 @@ class FavoriteViewController: UIViewController {
 extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return favoriteSongs.count
+        let count = favoriteSongs.count
+        
+        if count == 0 {
+            let alertController = UIAlertController(title: nil, message: "There are no songs in your favorites.", preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            
+            present(alertController, animated: true, completion: nil)
+        }
+        
+        return count
     }
+
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "favoriteCell", for: indexPath) as? FavoriteTableViewCell else {
@@ -147,12 +138,8 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
         let minutes = duration / 60
         cell.favoriteSongDurationLabel.text = "\(minutes):\(duration % 60)"
 
-        if let albumPhotoURL = song["albumPhotoURL"] as? String {
-           cell.favoriteImageView.image = nil
-           downloadImage(from: albumPhotoURL) { image in
-              cell.favoriteImageView.image = image
-           }
-        }
+        cell.favoriteImageView.setImage(from: song["albumPhotoURL"] as? String)
+
         return cell
     }
 

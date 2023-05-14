@@ -18,4 +18,9 @@ class ArtistCollectionViewCell: UICollectionViewCell {
         layer.borderWidth = 1
         layer.borderColor = UIColor.lightGray.cgColor
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        artistImageView.image = nil
+    }
 }
