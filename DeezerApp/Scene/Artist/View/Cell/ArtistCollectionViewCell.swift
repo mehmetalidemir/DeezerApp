@@ -12,15 +12,10 @@ class ArtistCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var artistImageView: UIImageView!
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func awakeFromNib() {
+        super.awakeFromNib()
         layer.cornerRadius = 10
         layer.borderWidth = 1
         layer.borderColor = UIColor.lightGray.cgColor
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        artistImageView.image = nil
     }
 }

@@ -12,88 +12,36 @@ class ArtistViewController: UIViewController {
     @IBOutlet weak var artistCollectionView: UICollectionView!
     var genreID: Int!
     var genreName: String!
-    var artistList = [GenreArtist]()
-    var selectedArtist: Artist!
 
-    var cellWidth: CGFloat = 0
-    var cellHeight: CGFloat = 0
-    var numberOfColumn: CGFloat = 2
-    var spacing: CGFloat = 12
+    private let viewModel = ArtistViewModel(apiManager: APIManager.shared)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        setupCollectionView()
+        fetchArtistData()
     }
 
-    private func setup() {
+    private func setupCollectionView() {
         artistCollectionView.dataSource = self
         artistCollectionView.delegate = self
-        getArtist()
     }
 
-    private func getArtist() {
-        APIManager.shared.getGenreArtist(with: genreID) { data in
-            switch(data)
-            {
-            case .success(let artist):
-                DispatchQueue.main.async {
-                    self.artistList = artist.data ?? [GenreArtist]()
-                    self.artistCollectionView.reloadData()
-                }
+    private func fetchArtistData() {
+        viewModel.getArtist(with: genreID) { [weak self] result in
+            switch result {
+            case .success:
+                self?.artistCollectionView.reloadData()
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
     }
 
-    func downloadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
-        guard let url = URL(string: urlString) else {
-            completion(nil)
-            return
-        }
-
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard error == nil else {
-                print("error \(error!.localizedDescription)")
-                completion(nil)
-                return
-            }
-
-            guard let data = data, let image = UIImage(data: data) else {
-                print("Image data is empty")
-                completion(nil)
-                return
-            }
-            completion(image)
-        }
-        task.resume()
-    }
-}
-
-extension ArtistViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return artistList.count
-    }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "artistCell", for: indexPath) as! ArtistCollectionViewCell
-
-        let artist = artistList[indexPath.row]
-        cell.artistLabel.text = artist.name
-        cell.artistImageView.setImage(from: artist.picture ?? "")
-
-        return cell
-    }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let artist = artistList[indexPath.row]
-        performSegue(withIdentifier: "goToAlbum", sender: artist)
-
-    }
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToAlbum", let albumVC = segue.destination as? AlbumViewController, let artist = sender as? GenreArtist {
             albumVC.artistID = artist.id
             albumVC.artistName = artist.name
-            downloadImage(from: artist.picture_big ?? "") { image in
+            viewModel.downloadImage(from: artist.picture_big ?? "") { image in
                 DispatchQueue.main.async {
                     albumVC.artistCoverImageView.image = image
                 }
@@ -102,18 +50,37 @@ extension ArtistViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
 }
 
+extension ArtistViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.artistList.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "artistCell", for: indexPath) as! ArtistCollectionViewCell
+
+        let artist = viewModel.artistList[indexPath.row]
+        cell.artistLabel.text = artist.name
+        cell.artistImageView.setImage(from: artist.picture ?? "")
+
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let artist = viewModel.artistList[indexPath.row]
+        performSegue(withIdentifier: "goToAlbum", sender: artist)
+    }
+}
 
 extension ArtistViewController: UICollectionViewDelegateFlowLayout {
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return spacing
+        return viewModel.spacing
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return spacing
+        return viewModel.spacing
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        return UIEdgeInsets(top: viewModel.spacing, left: viewModel.spacing, bottom: viewModel.spacing, right: viewModel.spacing)
     }
 }

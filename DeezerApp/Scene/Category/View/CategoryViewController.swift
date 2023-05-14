@@ -9,8 +9,7 @@ import UIKit
 
 class CategoryViewController: UIViewController {
     @IBOutlet weak var categoryCollectionView: UICollectionView!
-    var genres = [Genre]()
-
+    var viewModel = CategoryViewModel()
     var cellWidth: CGFloat = 0
     var cellHeight: CGFloat = 0
     var numberOfColumn: CGFloat = 2
@@ -18,27 +17,21 @@ class CategoryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        setupCollectionView()
+        setupViewModel()
+        viewModel.getGenres()
     }
 
-    private func setup() {
+    private func setupCollectionView() {
         categoryCollectionView.dataSource = self
         categoryCollectionView.delegate = self
-        getGenres()
         self.title = "Deezer"
     }
-    
-    private func getGenres() {
-        APIManager.shared.getGenres { data in
-            switch(data)
-            {
-            case .success(let genres):
-                DispatchQueue.main.async {
-                    self.genres = genres.data ?? [Genre]()
-                    self.categoryCollectionView.reloadData()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
+
+    private func setupViewModel() {
+        viewModel.updateUI = { [weak self] in
+            DispatchQueue.main.async {
+                self?.categoryCollectionView.reloadData()
             }
         }
     }
@@ -46,21 +39,21 @@ class CategoryViewController: UIViewController {
 
 extension CategoryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return genres.count
+        return viewModel.genres.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "categoryCell", for: indexPath) as! CategoryCollectionViewCell
-        
-        let category = genres[indexPath.row]
+
+        let category = viewModel.genres[indexPath.row]
         cell.categoryLabel.text = category.name
         cell.categoryImageView.setImage(from: category.picture ?? "")
         return cell
     }
 
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedGenre = genres[indexPath.row]
+        let selectedGenre = viewModel.genres[indexPath.row]
         performSegue(withIdentifier: "goToArtist", sender: selectedGenre)
         self.navigationItem.title = selectedGenre.name
     }
@@ -71,9 +64,7 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
             artistVC.genreName = selectedGenre.name
         }
     }
-    
 }
-
 
 extension CategoryViewController: UICollectionViewDelegateFlowLayout {
 
@@ -89,3 +80,4 @@ extension CategoryViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
     }
 }
+

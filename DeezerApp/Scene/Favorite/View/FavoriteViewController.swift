@@ -10,66 +10,42 @@ import AVFAudio
 
 class FavoriteViewController: UIViewController {
     @IBOutlet weak var favoriteTableView: UITableView!
-    var favoriteSongs = [[String: Any]]()
-    var timer: Timer?
-    var audioPlayer: AVAudioPlayer?
+    private var viewModel = FavoriteViewModel()
+    private var audioPlayer: AVAudioPlayer?
+    private var timer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupTableView()
         navigationItem.title = "Favorites"
+
+        viewModel.onUpdate = { [weak self] in
+            self?.favoriteTableView.reloadData()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        loadFavorites()
+        viewModel.loadFavorites()
     }
 
     private func setupTableView() {
         favoriteTableView.delegate = self
         favoriteTableView.dataSource = self
         favoriteTableView.separatorStyle = .none
-        
-    }
-
-    private func loadFavorites() {
-        let favorites = UserDefaults.standard.array(forKey: "favorites") as? [[String: Any]] ?? []
-        favoriteSongs = favorites
-        favoriteTableView.reloadData()
     }
 
     @IBAction func favoriteSongButtonTapped(_ sender: Any) {
         guard let cell = (sender as AnyObject).superview?.superview as? FavoriteTableViewCell else { return }
         guard let indexPath = favoriteTableView.indexPath(for: cell) else { return }
-        favoriteSongs.remove(at: indexPath.row)
-
-        UserDefaults.standard.set(favoriteSongs, forKey: "favorites")
-
-        favoriteTableView.deleteRows(at: [indexPath], with: .automatic)
-
-        let image = UIImage(systemName: "heart.fill")
-        (sender as AnyObject).setImage(image, for: .normal)
+        viewModel.removeFavorite(at: indexPath.row)
     }
 
     private func updateSongDurations() {
-        for (index, favorite) in favoriteSongs.enumerated() {
-            let albumID = favorite["albumID"] as? Int ?? 0
-
-            APIManager.shared.getAlbumSongs(with: albumID) { [weak self] result in
-                switch result {
-                case .success(let songs):
-                    DispatchQueue.main.async {
-                        if let songDuration = songs.first?.duration {
-                            self?.favoriteSongs[index]["duration"] = songDuration
-                            self?.favoriteTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-                        }
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
+        for (index, _) in viewModel.favoriteSongs.enumerated() {
+            viewModel.updateSongDuration(for: index)
         }
     }
 
@@ -112,17 +88,17 @@ class FavoriteViewController: UIViewController {
 extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = favoriteSongs.count
-        
+        let count = viewModel.favoriteSongs.count
+
         if count == 0 {
             let alertController = UIAlertController(title: nil, message: "There are no songs in your favorites.", preferredStyle: .alert)
-            
+
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(okAction)
-            
+
             present(alertController, animated: true, completion: nil)
         }
-        
+
         return count
     }
 
@@ -132,17 +108,11 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
 
-        let song = favoriteSongs[indexPath.row]
-        cell.favoriteSongLabel.text = song["title"] as? String ?? ""
-        let duration = song["duration"] as? Int ?? 0
-        let minutes = duration / 60
-        cell.favoriteSongDurationLabel.text = "\(minutes):\(duration % 60)"
-
-        cell.favoriteImageView.setImage(from: song["albumPhotoURL"] as? String)
+        let song = viewModel.favoriteSongs[indexPath.row]
+        cell.configure(with: song)
 
         return cell
     }
-
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
@@ -153,7 +123,7 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
         if let audioPlayer = audioPlayer, audioPlayer.isPlaying {
             stopAudio()
         } else {
-            let song = favoriteSongs[indexPath.row]
+            let song = viewModel.favoriteSongs[indexPath.row]
             guard let track = song["preview"] as? String, let url = URL(string: track) else { return }
             let startTime = audioPlayer?.currentTime ?? 0
             downloadFileFromURL(url: url, startTime: startTime)

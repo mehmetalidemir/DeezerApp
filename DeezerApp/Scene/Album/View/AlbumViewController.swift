@@ -11,13 +11,15 @@ class AlbumViewController: UIViewController {
 
     @IBOutlet weak var artistCoverImageView: UIImageView!
     @IBOutlet weak var albumTableView: UITableView!
+    private var viewModel: AlbumViewModel!
+
     var artistID: Int!
     var artistName: String!
-    var artistAlbums = [ArtistAlbum]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-
+        configureViewModel()
     }
 
     private func setup() {
@@ -28,49 +30,21 @@ class AlbumViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor.red
         title = artistName
         navigationController?.navigationBar.prefersLargeTitles = false
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [self] in
-            getArtistAlbums()
-        }
     }
 
-    private func getArtistAlbums() {
-
-        APIManager.shared.getArtistAlbums(with: artistID) { data in
-            switch(data)
-            {
-            case .success(let album):
+    private func configureViewModel() {
+        viewModel = AlbumViewModel(apiManager: APIManager.shared)
+        viewModel.getArtistAlbums(with: artistID) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
                 DispatchQueue.main.async {
-                    self.artistAlbums = album.data ?? [ArtistAlbum]()
                     self.albumTableView.reloadData()
                 }
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
-    }
-    func downloadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
-        guard let url = URL(string: urlString) else {
-            completion(nil)
-            return
-        }
-
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard error == nil else {
-                print("error \(error!.localizedDescription)")
-                completion(nil)
-                return
-            }
-
-            guard let data = data, let image = UIImage(data: data) else {
-                print("Image data is empty")
-                completion(nil)
-                return
-            }
-            completion(image)
-        }
-
-        task.resume()
     }
 
     func convertDate(dateString: String?) -> String? {
@@ -90,37 +64,33 @@ class AlbumViewController: UIViewController {
 
         return year
     }
-
-
 }
 
 extension AlbumViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return artistAlbums.count
+        return viewModel.artistAlbums.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "albumCell", for: indexPath) as! AlbumTableViewCell
 
-        let album = artistAlbums[indexPath.row]
+        let album = viewModel.artistAlbums[indexPath.row]
 
         cell.albumNameLabel?.text = album.title
         cell.albumReleaseDateLabel?.text = convertDate(dateString: album.release_date)
-
+        cell.albumImageView.setImage(from: album.cover)
         cell.albumImageView.image = UIImage(named: "placeholder")
-        downloadImage(from: album.cover ?? "") { image in
-            DispatchQueue.main.async {
-                cell.albumImageView.image = image
-            }
-        }
+
 
         return cell
     }
+
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let artist = artistAlbums[indexPath.row]
+        let artist = viewModel.artistAlbums[indexPath.row]
         performSegue(withIdentifier: "goToAlbumDetail", sender: artist)
     }
 
@@ -128,7 +98,7 @@ extension AlbumViewController: UITableViewDelegate, UITableViewDataSource {
         if segue.identifier == "goToAlbumDetail", let albumDetailVC = segue.destination as? AlbumDetailViewController, let album = sender as? ArtistAlbum {
             albumDetailVC.albumID = album.id
             albumDetailVC.albumName = album.title
-            albumDetailVC.albumPhotoURL = album.cover
+            albumDetailVC.albumPhotoURL = URL(string: album.cover ?? "")
         }
     }
 }

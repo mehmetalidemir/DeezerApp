@@ -17,9 +17,7 @@ class AlbumDetailTableViewCell: UITableViewCell {
         super.layoutSubviews()
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.lightGray.cgColor
-
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
     }
-    
    
 }
