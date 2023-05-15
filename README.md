@@ -16,6 +16,7 @@ DeezerApp is a mobile application developed using Swift and UIKit. The app is de
 - The app allows users to search among their data.
 
 ## Video
+Video Link - https://i.imgur.com/JbmhMM5.mp4
 
 https://github.com/mehmetalidemir/DeezerApp/assets/64283995/047b0fbf-fcaf-4a0a-a3ea-6f898e07c9e7
 
