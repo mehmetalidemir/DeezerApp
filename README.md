@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/mehmetalidemir/FoodOrderApp">
+  <a href="https://github.com/mehmetalidemir/DeezerApp">
     <img src="https://i.imgur.com/flF38Qe.png" alt="Logo" width="100" height="100">
   </a>
   <h3 align="center">Deezer App</h3>
